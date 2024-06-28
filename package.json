@@ -3,10 +3,9 @@
     "version": "1.0.0",
     "description": "Auth module that use credentials contained within security tokens to perform a login.",
     "main": "index.ts",
-    "type": "module",
     "scripts": {
         "build": "npx tsc",
-        "start": "nodemon dist/index.ts",
+        "start": "nodemon dist/index.js",
         "test": "jest"
     },
     "keywords": [],
@@ -16,10 +15,10 @@
         "@types/express": "^4.17.21",
         "@types/express-session": "^1.18.0",
         "dotenv": "^16.4.5",
-        "express": "^4.19.2"
+        "express": "^4.19.2",
+        "ts-node": "^10.9.2"
     },
     "devDependencies": {
-        "jest": "^29.7.0",
         "nodemon": "^3.1.4",
         "typescript": "^5.5.2"
     }
