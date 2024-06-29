@@ -1,4 +1,5 @@
 import express, { Request, Response, Router } from 'express';
+import registrationController from '../Controller/registrationController';
 
 const commonRouter: Router = express.Router();
 
@@ -11,5 +12,10 @@ commonRouter.post('/login', (req: Request, res: Response) => {
     console.log('Body params are:', bodyVariables);
     res.status(200).json({ message: 'Successfully Logged In !!' });
 });
+
+
+commonRouter.post('/register', registrationController.register);
+
+
 
 export default commonRouter;
