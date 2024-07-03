@@ -1,5 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import registrationController from '../Controller/registrationController';
+import validateRegistrationRequest from '../middleware/validateRegistrationRequest';
+import userSchema from '../middleware/schemas/userSchema';
 
 const commonRouter: Router = express.Router();
 
@@ -14,7 +16,7 @@ commonRouter.post('/login', (req: Request, res: Response) => {
 });
 
 
-commonRouter.post('/register', registrationController.register);
+commonRouter.post('/register', validateRegistrationRequest(userSchema), registrationController.register);
 
 
 

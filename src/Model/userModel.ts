@@ -9,6 +9,7 @@ class UserModel extends Model {
     public email!: string;
     public mobileNumber!: number;
     public userRole!: string;
+    public isActive!: boolean;
 }
 
 UserModel.init({
@@ -44,6 +45,11 @@ UserModel.init({
     },
     userRole: {
         type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: false
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         primaryKey: false
     }

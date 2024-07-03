@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import registerServices from '../Services/registration';
+import User from '../Types/user';
 
 const register = (req: Request, res: Response) => {
     const newRegistrationData = req.body;
@@ -13,12 +14,16 @@ const register = (req: Request, res: Response) => {
                 throw new Error('User Exists Already with this Email !');
             }
 
-            return registerServices.registerAccount(newRegistrationData)
-                .then((responseFromDB) => {
-                    console.log(responseFromDB);
-                    res.status(200).send({});
+            return registerServices.hashPassword(newRegistrationData.password);
+        }).then(async (hashedPassword: string) => {
+            newRegistrationData.password = hashedPassword;
+            newRegistrationData.isActive = true;
+            return await registerServices.registerAccount(newRegistrationData)
+                .then((responseFromDB: User) => {
+                    res.status(200).send({ message: 'Successfully Registered !' });
                 }).catch(error => {
-                    console.log(`Error is: ${error}`)
+                    console.log(`Error is: ${error}`);
+                    res.send(409).json({ message: error.message });
                 });
 
         }).catch(error => {

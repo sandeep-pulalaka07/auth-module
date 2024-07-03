@@ -1,17 +1,22 @@
 import UserModel from '../Model/userModel';
+import User from '../Types/user';
+import bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = 10;
 
 
-const isAccountExists = (userName: string, email: string) => {
-    const userExists = UserModel.findOne({ where: { userName: userName } }).then(user => !!user);
-    const emailExists = UserModel.findOne({ where: { email: email } }).then(user => !!user);
+const isAccountExists = async (userName: string, email: string): Promise<any> => {
+    const userExists = await UserModel.findOne({ where: { userName: userName } }).then(user => !!user);
+    const emailExists = await UserModel.findOne({ where: { email: email } }).then(user => !!user);
     return Promise.all([userExists, emailExists]).then(([userExists, emailExists]) => ({ userExists, emailExists }));
 }
 
-
-
-
-const registerAccount = (userData: any) => {
-    return UserModel.create(userData);
+const hashPassword = async (password: string): Promise<string> => {
+    return await bcrypt.hash(password, SALT_ROUNDS);
 }
 
-export default { isAccountExists, registerAccount }
+const registerAccount = async (userData: User): Promise<UserModel> => {
+    return await UserModel.create(userData);
+}
+
+export default { isAccountExists, registerAccount, hashPassword }
