@@ -12,6 +12,5 @@ commonRouter.get('/getTestResponse', (req: Request, res: Response) => {
 
 commonRouter.post('/login', loginController.login);
 commonRouter.post('/register', validateRegistrationRequest(userSchema), registrationController.register);
-// commonRouter.get('/getUserDetails', validateJWT, profileController.getUserDetails);
 
 export default commonRouter;

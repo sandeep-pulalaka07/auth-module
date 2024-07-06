@@ -1,5 +1,6 @@
 import UserModel from '../Model/userModel';
 import bcrypt from 'bcrypt';
+import manageJWT from '../middleware/manageJWT';
 
 
 interface LoginCredentials {
@@ -27,7 +28,8 @@ const authenticateUser = ({ email, password }: LoginCredentials): Promise<AuthRe
                         if (!isPasswordValid) {
                             resolve({ success: false });
                         } else {
-                            resolve({ success: true, role: user.userRole, firstname: user.firstName });
+                            const token: string = manageJWT.generateJWTToken(user.email);
+                            resolve({ success: true, role: user.userRole, firstname: user.firstName, token: token });
                         }
                     })
 
