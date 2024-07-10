@@ -26,7 +26,18 @@ const getUserDetailsByEmail = (email: string) => {
     })
 }
 
-const updateUserDetailsByEmail = () => {
+const updateUserDetailsByEmail = (profileToUpdate: any) => {
+    return new Promise((resolve, reject) => {
+        UserModel
+            .update(profileToUpdate, { where: { email: profileToUpdate.email } })
+            .then((responseAfterUpdateProfile) => {
+                resolve({ success: true });
+            })
+            .catch(error => {
+                console.error(`Error in updating the details: ${error}`);
+                reject({ success: false });
+            })
+    })
 
 }
 
